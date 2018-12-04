@@ -1,0 +1,14 @@
+[Unit]
+Description = nanoping daemon
+After = local-fs.target network-online.target
+StartLimitBurst=3
+StartLimitIntervalSec=1
+
+[Service]
+ExecStart = /usr/sbin/nanoping --server --interface %i 
+ExecStop = /bin/kill -KILL $MAINPID
+Restart = always
+Type = simple
+
+[Install]
+WantedBy = multi-user.target
