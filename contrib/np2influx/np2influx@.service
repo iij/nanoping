@@ -1,0 +1,16 @@
+[Unit]
+Description = nanoping client and influxd data importer
+After = local-fs.target network-online.target influxdb.service
+StartLimitBurst=3
+StartLimitIntervalSec=1
+
+[Service]
+ExecStart = /usr/local/bin/np2influx.py --config /etc/np2influx.conf --interface %i 
+ExecStop = /bin/kill -KILL $MAINPID
+Restart = always
+RestartSec = 2s
+Type = simple
+
+[Install]
+WantedBy = multi-user.target
+
